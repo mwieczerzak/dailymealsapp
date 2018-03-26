@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pl.mwieczerzak.dailymealsapp.bo.MealFinder;
 import pl.mwieczerzak.dailymealsapp.bo.MealService;
 import pl.mwieczerzak.dailymealsapp.dto.MealDto;
 import pl.mwieczerzak.dailymealsapp.dto.NewMealDto;
@@ -14,25 +15,26 @@ import pl.mwieczerzak.dailymealsapp.dto.NewMealDto;
 public class MealsController {
 
     private final MealService service;
+    private final MealFinder finder;
 
     @Autowired
-    public MealsController(MealService service) {
+    public MealsController(MealService service, MealFinder finder) {
         this.service = service;
+        this.finder = finder;
     }
 
 
     @GetMapping(value = "/meals")
-    //@RequestMapping(value = "/costs", method = RequestMethod.GET)
     public ModelAndView mealsPage() {
         ModelAndView mav = new ModelAndView("meals");
-        mav.addObject("meals", service.findMeals());
+        mav.addObject("meals", finder.findMeals());
         return mav;
     }
 
     @GetMapping(value = "/meal/{id}")
     public ModelAndView mealDetail(@PathVariable("id") Long id) {
         ModelAndView mav = new ModelAndView("mealDetails");
-        mav.addObject("meal", service.findMealsDetails(id));
+        mav.addObject("meal", finder.findMealsDetails(id));
         return mav;
     }
 
@@ -44,7 +46,6 @@ public class MealsController {
     }
 
 
-
     @GetMapping(value = "meal/add")
     public String addMeal(Model model) {
         model.addAttribute("newMeal", new NewMealDto());
@@ -54,22 +55,22 @@ public class MealsController {
     @GetMapping(value = "meal/edit")
     public String editMeal(Model model, @RequestParam("id") Long id) {
 
-        MealDto cd = service.findMealsDetails(id);
+        MealDto cd = finder.findMealsDetails(id);
         model.addAttribute("newMeal", NewMealDto.builder()
                 .name(cd.getName())
                 .mealDate(cd.getMealDate())
                 .proteins(cd.getProteins())
                 .carbs(cd.getCarbs())
                 .fats(cd.getFats())
+                .calories(cd.getCalories())
                 .id(cd.getId())
                 .build());
-
 
         return "edit";
     }
 
     @PostMapping(value = "meal/add")
-    public String saveMeal(@ModelAttribute("newCost") NewMealDto form,
+    public String saveMeal(@ModelAttribute("newMeal") NewMealDto form,
                            BindingResult result, Model model) {
 
         if (form.getId() != null) {
@@ -78,7 +79,7 @@ public class MealsController {
 
         service.addMeal(form);
 
-        return "redirect:../costs";
+        return "redirect:../meals";
     }
 
 

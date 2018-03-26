@@ -1,22 +1,16 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: matt
-  Date: 2018-03-05
-  Time: 12:38
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Cost control app</title>
+    <title>Daily Meals Application</title>
     <link href="${pageContext.servletContext.contextPath}/resources/css/app.css" rel="stylesheet"></head>
 
 </head>
 <body>
 <jsp:include page="menu.jsp" />
-Dodaj/edytuj wydatek:
-<form:form action="meal/add" modelAttribute="newMeal" method="post">
+Dodaj/edytuj posiłek:
+<form:form action="add" modelAttribute="newMeal" method="post">
     <form:input type="hidden" path="id"/><br>
     <form:label path="name">Nazwa posiłku:</form:label>
     <form:input path="name"/><br>

@@ -3,8 +3,8 @@ package pl.mwieczerzak.dailymealsapp.bo;
 import org.springframework.stereotype.Service;
 import pl.mwieczerzak.dailymealsapp.dto.MealDto;
 import pl.mwieczerzak.dailymealsapp.dto.NewMealDto;
-import static pl.mwieczerzak.dailymealsapp.repository.MealRepository.meals;
 
+import static pl.mwieczerzak.dailymealsapp.repository.MealRepository.meals;
 
 @Service
 public class MealService {

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.mwieczerzak.dailymealsapp.bo.MealFinder;
 import pl.mwieczerzak.dailymealsapp.bo.MealService;
+import pl.mwieczerzak.dailymealsapp.dto.CriteriaDto;
 import pl.mwieczerzak.dailymealsapp.dto.MealDto;
 import pl.mwieczerzak.dailymealsapp.dto.NewMealDto;
 
@@ -23,11 +24,11 @@ public class MealsController {
         this.finder = finder;
     }
 
-
     @GetMapping(value = "/meals")
     public ModelAndView mealsPage() {
         ModelAndView mav = new ModelAndView("meals");
         mav.addObject("meals", finder.findMeals());
+        mav.addObject("criteria", new CriteriaDto());
         return mav;
     }
 
@@ -38,13 +39,11 @@ public class MealsController {
         return mav;
     }
 
-
     @PostMapping(value = "meal/delete")
     public String deleteMeal(@RequestParam(name = "mealId") String id) {
         service.deleteMeal(Long.valueOf(id));
         return "redirect:../meals";
     }
-
 
     @GetMapping(value = "meal/add")
     public String addMeal(Model model) {
@@ -82,5 +81,15 @@ public class MealsController {
         return "redirect:../meals";
     }
 
+    @PostMapping(value = "byCalories")
+    public ModelAndView search(@ModelAttribute("criteria") CriteriaDto criteria, BindingResult result, Model model) {
+        ModelAndView mav = new ModelAndView("meals");
+        mav.addObject("meals", finder.findByCriteria(criteria));
+        mav.addObject("criteria", new CriteriaDto());
+        return mav;
+
+    }
 
 }
+
+

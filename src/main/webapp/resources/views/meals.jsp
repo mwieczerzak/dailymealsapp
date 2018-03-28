@@ -10,6 +10,14 @@
 <body>
 <jsp:include page="menu.jsp" />
 
+<form:form modelAttribute="criteria" action="byCalories" method="post" >
+    <form:label path="from">Kalorie od:</form:label>
+    <form:input path="from"></form:input><br>
+    <form:label path="to">Kalorie do:</form:label>
+    <form:input path="to"></form:input><br>
+    <input type="submit" value="Szukaj">
+</form:form>
+
 Moje posiłki:<br>
 
 <table>
@@ -17,10 +25,10 @@ Moje posiłki:<br>
     <tr>
         <td>Nazwa</td>
         <td>Kiedy</td>
-        <td>Białko</td>
-        <td>Węglowodany</td>
-        <td>Tłuszcze</td>
         <td>Kalorie</td>
+        <td>Edycja</td>
+        <td>Szczegóły</td>
+        <td></td>
     </tr>
     </thead>
     <tbody>
@@ -28,9 +36,6 @@ Moje posiłki:<br>
         <tr>
             <td>${meal.name}</td>
             <td>${meal.mealDate}</td>
-            <td>${meal.proteins}</td>
-            <td>${meal.carbs}</td>
-            <td>${meal.fats}</td>
             <td>${meal.calories}</td>
             <td><a href="${pageContext.servletContext.contextPath}/meal/edit?id=${meal.id}">Edytuj</a></td>
             <td><a href="${pageContext.servletContext.contextPath}/meal/${meal.id}">Przejdz</a></td>

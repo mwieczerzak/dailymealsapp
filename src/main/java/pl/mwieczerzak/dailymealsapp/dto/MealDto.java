@@ -23,5 +23,4 @@ public class MealDto {
     private BigDecimal calories;
 
 
-
 }

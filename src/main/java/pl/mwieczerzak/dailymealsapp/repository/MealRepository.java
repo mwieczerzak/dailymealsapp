@@ -14,12 +14,12 @@ public class MealRepository {
     static {
         meals.add(MealDto.builder()
                 .id(1L)
-                .name("4 beers")
+                .name("makaron z truskawkami")
                 .mealDate(LocalDate.now())
                 .proteins(BigDecimal.valueOf(0).setScale(1))
-                .carbs(BigDecimal.valueOf(200).setScale(1))
+                .carbs(BigDecimal.valueOf(150).setScale(1))
                 .fats(BigDecimal.valueOf(10).setScale(1))
-                .calories(BigDecimal.valueOf(200 * 4 + 10 * 9).setScale(1))
+                .calories(BigDecimal.valueOf(150 * 4 + 10 * 9).setScale(1))
                 .build());
         meals.add(MealDto.builder()
                 .id(2L)
@@ -32,7 +32,7 @@ public class MealRepository {
                 .build());
         meals.add(MealDto.builder()
                 .id(3L)
-                .name("5 eggs with bread")
+                .name("jajecznica")
                 .mealDate(LocalDate.now())
                 .proteins(BigDecimal.valueOf(35).setScale(1))
                 .carbs(BigDecimal.valueOf(70).setScale(1))
@@ -50,7 +50,7 @@ public class MealRepository {
                 .build());
         meals.add(MealDto.builder()
                 .id(5L)
-                .name("dinner in restaurant")
+                .name("kolacja w restauracji")
                 .mealDate(LocalDate.now())
                 .proteins(BigDecimal.valueOf(30).setScale(1))
                 .carbs(BigDecimal.valueOf(75).setScale(1))

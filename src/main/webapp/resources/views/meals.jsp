@@ -1,16 +1,16 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Daily Meals Application</title>
-    <link href="${pageContext.servletContext.contextPath}/resources/css/app.css" rel="stylesheet"></head>
+    <link href="${pageContext.servletContext.contextPath}/resources/css/app.css" rel="stylesheet">
+</head>
 </head>
 <body>
-<jsp:include page="menu.jsp" />
+<jsp:include page="menu.jsp"/>
 
-<form:form modelAttribute="criteria" action="byCalories" method="post" >
+<form:form modelAttribute="criteria" action="byCalories" method="post">
     <form:label path="from">Kalorie od:</form:label>
     <form:input path="from"></form:input><br>
     <form:label path="to">Kalorie do:</form:label>

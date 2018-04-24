@@ -11,6 +11,7 @@ import pl.mwieczerzak.dailymealsapp.bo.MealService;
 import pl.mwieczerzak.dailymealsapp.dto.CriteriaDto;
 import pl.mwieczerzak.dailymealsapp.dto.MealDto;
 import pl.mwieczerzak.dailymealsapp.dto.NewMealDto;
+import pl.mwieczerzak.dailymealsapp.repository.MealRepository;
 
 @Controller
 public class MealsController {
@@ -19,7 +20,7 @@ public class MealsController {
     private final MealFinder finder;
 
     @Autowired
-    public MealsController(MealService service, MealFinder finder) {
+    public MealsController(MealService service, MealFinder finder, MealRepository repository) {
         this.service = service;
         this.finder = finder;
     }

@@ -10,7 +10,7 @@ public class ErrorController {
     @ExceptionHandler(value = RuntimeException.class)
     public ModelAndView handleError(RuntimeException ex) {
         ModelAndView mav = new ModelAndView("error");
-        mav.addObject("msg", ex.getMessage());
+        mav.addObject("errorMessage", ex.getMessage());
         return mav;
     }
 }

@@ -1,61 +1,15 @@
 package pl.mwieczerzak.dailymealsapp.repository;
 
-import pl.mwieczerzak.dailymealsapp.dto.MealDto;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import pl.mwieczerzak.dailymealsapp.entity.Meal;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-public class MealRepository {
+@Repository
+public interface MealRepository extends JpaRepository<Meal, Long> {
 
-    public static List<MealDto> meals = new ArrayList<>();
+    List<Meal> findMealsByCaloriesBetween(BigDecimal from, BigDecimal to);
 
-    static {
-        meals.add(MealDto.builder()
-                .id(1L)
-                .name("makaron z truskawkami")
-                .mealDate(LocalDate.now())
-                .proteins(BigDecimal.valueOf(0).setScale(1))
-                .carbs(BigDecimal.valueOf(150).setScale(1))
-                .fats(BigDecimal.valueOf(10).setScale(1))
-                .calories(BigDecimal.valueOf(150 * 4 + 10 * 9).setScale(1))
-                .build());
-        meals.add(MealDto.builder()
-                .id(2L)
-                .name("pizza")
-                .mealDate(LocalDate.now())
-                .proteins(BigDecimal.valueOf(30).setScale(1))
-                .carbs(BigDecimal.valueOf(180).setScale(1))
-                .fats(BigDecimal.valueOf(50).setScale(1))
-                .calories(BigDecimal.valueOf(30 * 4 + 180 * 4 + 50 * 9).setScale(1))
-                .build());
-        meals.add(MealDto.builder()
-                .id(3L)
-                .name("jajecznica")
-                .mealDate(LocalDate.now())
-                .proteins(BigDecimal.valueOf(35).setScale(1))
-                .carbs(BigDecimal.valueOf(70).setScale(1))
-                .fats(BigDecimal.valueOf(25).setScale(1))
-                .calories(BigDecimal.valueOf(35 * 4 + 70 * 4 + 25 * 9).setScale(1))
-                .build());
-        meals.add(MealDto.builder()
-                .id(4L)
-                .name("pierogi ruskie")
-                .mealDate(LocalDate.now())
-                .proteins(BigDecimal.valueOf(25).setScale(1))
-                .carbs(BigDecimal.valueOf(130).setScale(1))
-                .fats(BigDecimal.valueOf(20).setScale(1))
-                .calories(BigDecimal.valueOf(25 * 4 + 130 * 4 + 20 * 9).setScale(1))
-                .build());
-        meals.add(MealDto.builder()
-                .id(5L)
-                .name("kolacja w restauracji")
-                .mealDate(LocalDate.now())
-                .proteins(BigDecimal.valueOf(30).setScale(1))
-                .carbs(BigDecimal.valueOf(75).setScale(1))
-                .fats(BigDecimal.valueOf(15).setScale(1))
-                .calories(BigDecimal.valueOf(30 * 4 + 75 * 4 + 15 * 9).setScale(1))
-                .build());
-    }
 }

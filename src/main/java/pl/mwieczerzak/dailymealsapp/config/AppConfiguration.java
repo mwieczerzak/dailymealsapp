@@ -30,4 +30,5 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/resources/css/**").addResourceLocations("/resources/css/");
     }
 
+
 }

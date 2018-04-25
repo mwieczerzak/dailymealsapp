@@ -7,6 +7,8 @@ import pl.mwieczerzak.dailymealsapp.dto.NewMealDto;
 import pl.mwieczerzak.dailymealsapp.entity.Meal;
 import pl.mwieczerzak.dailymealsapp.repository.MealRepository;
 
+import java.math.BigDecimal;
+
 @Service
 public class MealService {
 
@@ -33,7 +35,9 @@ public class MealService {
                 .proteins(meal.getProteins())
                 .carbs(meal.getCarbs())
                 .fats(meal.getFats())
-                .calories(meal.getCalories())
+                .calories(meal.getCarbs().multiply(new BigDecimal(4))
+                        .add(meal.getProteins().multiply(new BigDecimal(4)))
+                        .add(meal.getFats().multiply(new BigDecimal(9))))
                 .build();
     }
 

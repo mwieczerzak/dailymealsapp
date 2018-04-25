@@ -15,7 +15,7 @@ public class NewMealDto {
 
         private Long id;
         private String name;
-        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        @DateTimeFormat(pattern = "dd-MM-yyyy")
         private LocalDate mealDate;
         private BigDecimal proteins;
         private BigDecimal carbs;

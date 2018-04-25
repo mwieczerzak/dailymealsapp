@@ -22,8 +22,6 @@ Dodaj/edytuj posiłek:
     <form:input path="carbs"/><br>
     <form:label path="fats">Ilość tłuszczy:</form:label>
     <form:input path="fats"/><br>
-    <form:label path="calories">Ilość kalorii:</form:label>
-    <form:input path="calories"/><br>
 
     <input type="submit" name="apply" value="Zatwierdz"/>
 </form:form>

@@ -13,6 +13,8 @@ import pl.mwieczerzak.dailymealsapp.dto.MealDto;
 import pl.mwieczerzak.dailymealsapp.dto.NewMealDto;
 import pl.mwieczerzak.dailymealsapp.repository.MealRepository;
 
+import javax.validation.Valid;
+
 @Controller
 public class MealsController {
 
@@ -20,7 +22,7 @@ public class MealsController {
     private final MealFinder finder;
 
     @Autowired
-    public MealsController(MealService service, MealFinder finder, MealRepository repository) {
+    public MealsController(MealService service, MealFinder finder) {
         this.service = service;
         this.finder = finder;
     }
@@ -54,7 +56,6 @@ public class MealsController {
 
     @GetMapping(value = "meal/edit")
     public String editMeal(Model model, @RequestParam("id") Long id) {
-
         MealDto cd = finder.findMealsDetails(id);
         model.addAttribute("newMeal", NewMealDto.builder()
                 .name(cd.getName())
@@ -70,25 +71,26 @@ public class MealsController {
     }
 
     @PostMapping(value = "meal/add")
-    public String saveMeal(@ModelAttribute("newMeal") NewMealDto form,
+    public String saveMeal(@ModelAttribute("newMeal") @Valid NewMealDto form,
                            BindingResult result, Model model) {
-
-        if (form.getId() != null) {
-            service.deleteMeal(form.getId());
+        if (result.hasErrors()) {
+            return "edit";
+        } else {
+            if (form.getId() != null) {
+                service.deleteMeal(form.getId());
+            }
+            service.addMeal(form);
+            return "redirect:../meals";
         }
-
-        service.addMeal(form);
-
-        return "redirect:../meals";
     }
 
     @PostMapping(value = "byCalories")
-    public ModelAndView search(@ModelAttribute("criteria") CriteriaDto criteria, BindingResult result, Model model) {
+    public ModelAndView search(@ModelAttribute("criteria") @Valid CriteriaDto criteria,
+                               BindingResult result, Model model) {
         ModelAndView mav = new ModelAndView("meals");
         mav.addObject("meals", finder.findByCriteria(criteria));
         mav.addObject("criteria", new CriteriaDto());
         return mav;
-
     }
 
 }

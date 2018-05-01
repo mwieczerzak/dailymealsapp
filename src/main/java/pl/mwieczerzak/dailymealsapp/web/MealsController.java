@@ -88,9 +88,13 @@ public class MealsController {
     public ModelAndView search(@ModelAttribute("criteria") @Valid CriteriaDto criteria,
                                BindingResult result, Model model) {
         ModelAndView mav = new ModelAndView("meals");
-        mav.addObject("meals", finder.findByCriteria(criteria));
-        mav.addObject("criteria", new CriteriaDto());
-        return mav;
+        if (result.hasErrors()) {
+            return mav;
+        } else {
+            mav.addObject("meals", finder.findByCriteria(criteria));
+            mav.addObject("criteria", new CriteriaDto());
+            return mav;
+        }
     }
 
 }

@@ -5,16 +5,22 @@
 <head>
     <title>Daily Meals Application</title>
     <link href="${pageContext.servletContext.contextPath}/resources/css/app.css" rel="stylesheet">
-</head>
+    <style>
+        .error {
+            color: #ff0000;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="menu.jsp"/>
 
 <form:form modelAttribute="criteria" action="byCalories" method="post">
     <form:label path="from">Kalorie od:</form:label>
-    <form:input path="from"></form:input><br>
+    <form:input path="from"></form:input>
+    <form:errors path="from" cssClass="error" /><br>
     <form:label path="to">Kalorie do:</form:label>
-    <form:input path="to"></form:input><br>
+    <form:input path="to"></form:input>
+    <form:errors path="to" cssClass="error" /><br>
     <input type="submit" value="Szukaj">
 </form:form>
 

@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Daily Meals Application</title>
+    <title>Meal Details</title>
     <link href="${pageContext.servletContext.contextPath}/resources/css/app.css" rel="stylesheet"></head>
 <body>
 <jsp:include page="menu.jsp" />
@@ -13,7 +13,6 @@ Białko : ${meal.proteins} <br>
 Węglowodany : ${meal.carbs} <br>
 Tłuszcze : ${meal.fats} <br>
 Kalorie : ${meal.calories} <br>
-
 
 <a href="${pageContext.servletContext.contextPath}/meals">Wróć</a>
 

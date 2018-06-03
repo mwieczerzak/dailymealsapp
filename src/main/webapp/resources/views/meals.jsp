@@ -3,26 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Daily Meals Application</title>
+    <title>Meals</title>
     <link href="${pageContext.servletContext.contextPath}/resources/css/app.css" rel="stylesheet">
-    <style>
-        .error {
-            color: #ff0000;
-        }
-    </style>
 </head>
 <body>
 <jsp:include page="menu.jsp"/>
-
-<form:form modelAttribute="criteria" action="byCalories" method="post">
-    <form:label path="from">Kalorie od:</form:label>
-    <form:input path="from"></form:input>
-    <form:errors path="from" cssClass="error" /><br>
-    <form:label path="to">Kalorie do:</form:label>
-    <form:input path="to"></form:input>
-    <form:errors path="to" cssClass="error" /><br>
-    <input type="submit" value="Szukaj">
-</form:form>
 
 Moje posiłki:<br>
 
@@ -43,10 +28,10 @@ Moje posiłki:<br>
             <td>${meal.name}</td>
             <td>${meal.mealDate}</td>
             <td>${meal.calories}</td>
-            <td><a href="${pageContext.servletContext.contextPath}/meal/edit?id=${meal.id}">Edytuj</a></td>
-            <td><a href="${pageContext.servletContext.contextPath}/meal/${meal.id}">Przejdz</a></td>
+            <td><a href="${pageContext.servletContext.contextPath}/meals/edit?id=${meal.id}">Edytuj</a></td>
+            <td><a href="${pageContext.servletContext.contextPath}/meals/${meal.id}">Przejdz</a></td>
             <td>
-                <form action="meal/delete" method="post">
+                <form action="meals/delete" method="post">
                     <input type="submit" name="deleteMeal" value="Usun"/>
                     <input type="hidden" name="mealId" value="${meal.id}"/>
                 </form>
@@ -54,9 +39,15 @@ Moje posiłki:<br>
         </tr>
     </c:forEach>
     </tbody>
-</table>
+</table><br/>
 
-<a href="${pageContext.servletContext.contextPath}/meal/add">Dodaj posiłek</a>
+<table>
+    <tr>
+        <td>Kalorie łącznie</td>
+        <td>${sumCalories}</td>
+        <td><a href="${pageContext.servletContext.contextPath}/meals">Szczególy</a></td>
+    </tr>
+</table>
 
 </body>
 </html>

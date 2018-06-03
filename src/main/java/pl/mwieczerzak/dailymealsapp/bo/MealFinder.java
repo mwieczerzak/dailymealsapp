@@ -3,13 +3,13 @@ package pl.mwieczerzak.dailymealsapp.bo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.mwieczerzak.dailymealsapp.dto.CriteriaDto;
+import pl.mwieczerzak.dailymealsapp.dto.MealDateDto;
 import pl.mwieczerzak.dailymealsapp.dto.MealDto;
 import pl.mwieczerzak.dailymealsapp.entity.Meal;
 import pl.mwieczerzak.dailymealsapp.repository.MealRepository;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,10 +47,26 @@ public class MealFinder {
                 .orElseThrow(NoSuchElementException::new);
     }
 
-    public List<MealDto> findByCriteria(CriteriaDto cr) {
-        return mealRepository.findMealsByCaloriesBetween(cr.getFrom(), cr.getTo())
+    public List<MealDto> findByCalories(CriteriaDto criteria) {
+        return mealRepository.findMealsByCaloriesBetween(criteria.getFrom(), criteria.getTo())
                 .stream()
                 .map(this::mapMeal)
                 .collect(Collectors.toList());
     }
+
+    public List<MealDto> findByDate(MealDateDto date) {
+        return mealRepository.findMealsByMealDateEquals(date.getDate())
+                .stream()
+                .map(this::mapMeal)
+                .collect(Collectors.toList());
+    }
+
+    public Set<LocalDate> findAllDates(){
+        return findMeals().stream().map(e -> e.getMealDate()).collect(Collectors.toSet());
+
+    }
+
+
+
+
 }

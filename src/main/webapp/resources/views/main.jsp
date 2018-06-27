@@ -3,12 +3,13 @@
 <html>
 <head>
     <title>Daily Meals Application</title>
-    <link href="${pageContext.servletContext.contextPath}/resources/css/app.css" rel="stylesheet"></head>
+    <link href="${pageContext.servletContext.contextPath}/resources/css/app.css" rel="stylesheet">
+</head>
+
 <body>
 <jsp:include page="menu.jsp" />
 
 Dziennik posiłków<br>
-
 
 </body>
 </html>

@@ -2,6 +2,8 @@ package pl.mwieczerzak.dailymealsapp.dto;
 
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import pl.mwieczerzak.dailymealsapp.entity.User;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
@@ -29,5 +31,6 @@ public class NewMealDto {
         @NotNull
         private BigDecimal fats;
         private BigDecimal calories;
+        private User user;
 
     }

@@ -1,6 +1,7 @@
 package pl.mwieczerzak.dailymealsapp.dto;
 
 import lombok.*;
+import pl.mwieczerzak.dailymealsapp.entity.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -18,6 +19,11 @@ public class MealDto {
     private BigDecimal carbs;
     private BigDecimal fats;
     private BigDecimal calories;
+
+    private User user;
+
+
+
 
 
 }

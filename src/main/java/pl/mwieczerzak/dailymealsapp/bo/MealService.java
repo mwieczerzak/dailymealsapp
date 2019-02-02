@@ -9,16 +9,19 @@ import pl.mwieczerzak.dailymealsapp.entity.Meal;
 import pl.mwieczerzak.dailymealsapp.repository.MealRepository;
 
 import java.math.BigDecimal;
-import java.util.stream.Collectors;
+import java.time.LocalDate;
+import java.util.stream.Stream;
 
 @Service
 public class MealService {
 
     private final MealRepository mealRepository;
+    private final UserFinder userFinder;
 
     @Autowired
-    public MealService(MealRepository mealRepository) {
+    public MealService(MealRepository mealRepository, UserFinder userFinder) {
         this.mealRepository = mealRepository;
+        this.userFinder = userFinder;
     }
 
     public void deleteMeal(Long id) {
@@ -29,32 +32,57 @@ public class MealService {
         mealRepository.save(getMealFromDto(meal));
     }
 
+    public void editMeal(NewMealDto meal) {
+        String name = meal.getName();
+        LocalDate mealDate = meal.getMealDate();
+        BigDecimal proteins = meal.getProteins();
+        BigDecimal carbs = meal.getCarbs();
+        BigDecimal fats = meal.getFats();
+        BigDecimal calories = calculateCalories(meal);
+        Long id = meal.getId();
+        mealRepository.updateMealById(name, mealDate, proteins, carbs, fats, calories, id);
+    }
+
     private Meal getMealFromDto(NewMealDto meal) {
         return Meal.builder()
+                .id(meal.getId())
                 .name(meal.getName())
                 .mealDate(meal.getMealDate())
-                .id(meal.getId())
                 .proteins(meal.getProteins())
                 .carbs(meal.getCarbs())
                 .fats(meal.getFats())
-                .calories(meal.getCarbs().multiply(new BigDecimal(4))
-                        .add(meal.getProteins().multiply(new BigDecimal(4)))
-                        .add(meal.getFats().multiply(new BigDecimal(9))))
+                .calories(calculateCalories(meal))
+                .user(userFinder.findLoggedUser())
                 .build();
+    }
+
+    private BigDecimal calculateCalories(NewMealDto meal) {
+        return Stream.of(
+                meal.getProteins().multiply(new BigDecimal(4)),
+                meal.getCarbs().multiply(new BigDecimal(4)),
+                meal.getFats().multiply(new BigDecimal(9)))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public BigDecimal sumAllCalories() {
         BigDecimal sum = new BigDecimal(0);
-        for (Meal meal : mealRepository.findAll().stream().collect(Collectors.toList())) {
+        for (Meal meal : mealRepository.findAll()) {
             sum = sum.add(meal.getCalories());
         }
         return sum;
     }
 
-    public BigDecimal sumDailyCalories(MealDateDto date) {
+    public BigDecimal sumUserCalories(Long userId) {
         BigDecimal sum = new BigDecimal(0);
-        for (Meal meal : mealRepository.findMealsByMealDateEquals(date.getDate())
-                .stream().collect(Collectors.toList())) {
+        for (Meal meal : mealRepository.findMealsByUserId(userId)) {
+            sum = sum.add(meal.getCalories());
+        }
+        return sum;
+    }
+
+    public BigDecimal sumUserDailyCalories(MealDateDto date) {
+        BigDecimal sum = new BigDecimal(0);
+        for (Meal meal : mealRepository.findMealsByMealDateAndAndUserId(date.getDate(), userFinder.findLoggedUser().getId())) {
             sum = sum.add(meal.getCalories());
         }
         return sum;
@@ -62,11 +90,10 @@ public class MealService {
 
     public BigDecimal sumCriteriaCalories(CriteriaDto criteria) {
         BigDecimal sum = new BigDecimal(0);
-        for (Meal meal : mealRepository.findMealsByCaloriesBetween(criteria.getFrom(), criteria.getTo())
-                .stream().collect(Collectors.toList())) {
+        for (Meal meal : mealRepository.findMealsByUserIdAndCaloriesBetween(userFinder.findLoggedUser().getId(),
+                criteria.getFrom(), criteria.getTo())) {
             sum = sum.add(meal.getCalories());
         }
         return sum;
     }
-
 }

@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
     <title>Meals</title>
@@ -9,8 +8,13 @@
 </head>
 <body>
 <jsp:include page="menu.jsp"/>
+<br>
 
-Moje posiłki:<br>
+<form action="${pageContext.servletContext.contextPath}/meals/add" method="get">
+    <input type="submit" value="Dodaj posiłek"/>
+</form>
+
+Moje posiłki:<br/>
 
 <table>
     <thead>
@@ -24,7 +28,7 @@ Moje posiłki:<br>
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${meals}" var="meal">
+    <c:forEach items="${findMealsByUserId}" var="meal">
         <tr>
             <td>${meal.name}</td>
             <td>${meal.mealDate}</td>
@@ -51,4 +55,3 @@ Moje posiłki:<br>
 </table>
 
 </body>
-</html>

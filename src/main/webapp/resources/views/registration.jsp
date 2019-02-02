@@ -1,5 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Register</title>
@@ -13,21 +13,22 @@
 </head>
 <body>
 
-Zarejestruj się:
+<h3>Zarejestruj się:</h3>
+
 <form:form action="add" modelAttribute="newUser" method="post">
-    <form:input type="hidden" path="id"/><br>
+    <form:input type="hidden" path="id"/>
 
     Login: <form:input path="login"/>
-    <form:errors path="login" cssClass="error" /><br>
+    <form:errors path="login" cssClass="error"/><br>
 
     Hasło: <form:input path="password"/>
-    <form:errors path="password" cssClass="error" /><br>
+    <form:errors path="password" cssClass="error"/><br>
 
     Imię: <form:input path="firstName"/>
-    <form:errors path="firstName" cssClass="error" /><br>
+    <form:errors path="firstName" cssClass="error"/><br>
 
     Nazwisko:<form:input path="lastName"/>
-    <form:errors path="lastName" cssClass="error" /><br>
+    <form:errors path="lastName" cssClass="error"/><br><br>
 
     <input type="submit" name="apply" value="Zatwierdz"/>
 </form:form>

@@ -3,10 +3,8 @@ package pl.mwieczerzak.dailymealsapp.bo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.mwieczerzak.dailymealsapp.dto.NewUserDto;
-import pl.mwieczerzak.dailymealsapp.dto.UserDto;
 import pl.mwieczerzak.dailymealsapp.entity.User;
 import pl.mwieczerzak.dailymealsapp.repository.UserRepository;
-
 
 @Service
 public class UserService {
@@ -27,8 +25,12 @@ public class UserService {
     }
 
     public void editUser(NewUserDto user) {
-        deleteUser(user.getId());
-        addUser(user);
+        String firstName = user.getFirstName();
+        String lastName = user.getLastName();
+        String login = user.getLogin();
+        String password = user.getPassword();
+        Long id = user.getId();
+        userRepository.updateUserById(firstName, lastName, login, password, id);
     }
 
     private User getUserFromDto(NewUserDto user) {
@@ -40,7 +42,4 @@ public class UserService {
                 .password(user.getPassword())
                 .build();
     }
-
-
-
 }

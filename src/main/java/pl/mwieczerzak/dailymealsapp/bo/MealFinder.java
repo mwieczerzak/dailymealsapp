@@ -16,14 +16,44 @@ import java.util.stream.Collectors;
 public class MealFinder {
 
     private final MealRepository mealRepository;
+    private final UserFinder userFinder;
 
     @Autowired
-    public MealFinder(MealRepository mealRepository) {
+    public MealFinder(MealRepository mealRepository, UserFinder userFinder) {
         this.mealRepository = mealRepository;
+        this.userFinder = userFinder;
     }
 
-    public List<MealDto> findMeals() {
+    public List<MealDto> findAllMeals() {
         return mealRepository.findAll()
+                .stream()
+                .map(this::mapMeal)
+                .collect(Collectors.toList());
+    }
+
+    public MealDto findSingleMealDetails(Long id) {
+        return Optional.ofNullable(mealRepository.findOne(id))
+                .map(this::mapMeal)
+                .orElseThrow(NoSuchElementException::new);
+    }
+
+    public List<MealDto> findUserMealsByCalories(CriteriaDto criteria) {
+        return mealRepository.findMealsByUserIdAndCaloriesBetween(userFinder.findLoggedUser().getId(),
+                criteria.getFrom(), criteria.getTo())
+                .stream()
+                .map(this::mapMeal)
+                .collect(Collectors.toList());
+    }
+
+    public List<MealDto> findUserMealsByDate(MealDateDto date) {
+        return findMealsByUserId(userFinder.findLoggedUser().getId())
+                .stream()
+                .filter(meal -> meal.getMealDate().equals(date.getDate()))
+                .collect(Collectors.toList());
+    }
+
+    public List<MealDto> findMealsByUserId(Long id) {
+        return mealRepository.findMealsByUserId(id)
                 .stream()
                 .map(this::mapMeal)
                 .collect(Collectors.toList());
@@ -41,32 +71,10 @@ public class MealFinder {
                 .build();
     }
 
-    public MealDto findMealsDetails(Long id) {
-        return Optional.ofNullable(mealRepository.findOne(id))
-                .map(this::mapMeal)
-                .orElseThrow(NoSuchElementException::new);
-    }
-
-    public List<MealDto> findByCalories(CriteriaDto criteria) {
-        return mealRepository.findMealsByCaloriesBetween(criteria.getFrom(), criteria.getTo())
+    public Set<LocalDate> findDatesByUserMeals() {
+        return findMealsByUserId(userFinder.findLoggedUser().getId())
                 .stream()
-                .map(this::mapMeal)
-                .collect(Collectors.toList());
+                .map(MealDto::getMealDate)
+                .collect(Collectors.toSet());
     }
-
-    public List<MealDto> findByDate(MealDateDto date) {
-        return mealRepository.findMealsByMealDateEquals(date.getDate())
-                .stream()
-                .map(this::mapMeal)
-                .collect(Collectors.toList());
-    }
-
-    public Set<LocalDate> findAllDates(){
-        return findMeals().stream().map(e -> e.getMealDate()).collect(Collectors.toSet());
-
-    }
-
-
-
-
 }

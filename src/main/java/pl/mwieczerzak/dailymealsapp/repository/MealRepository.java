@@ -23,7 +23,7 @@ public interface MealRepository extends JpaRepository<Meal, Long> {
     @Modifying
     @Transactional
     @Query("UPDATE Meal m SET m.name = ?1, m.mealDate = ?2, m.proteins = ?3," +
-            " m.carbs = ?4, m.fats = ?5, m.calories = ?6 WHERE m.id = ?7")
+            " m.carbs = ?4, m.fats = ?5, m.calories = ?6, m.modifiedBy = ?7 WHERE m.id = ?8")
     void updateMealById(String name, LocalDate date, BigDecimal proteins,
-                        BigDecimal carbs, BigDecimal fats, BigDecimal calories, Long id);
+                        BigDecimal carbs, BigDecimal fats, BigDecimal calories, String modifiedBy, Long id);
 }

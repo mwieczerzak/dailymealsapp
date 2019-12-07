@@ -40,7 +40,8 @@ public class MealService {
         BigDecimal fats = meal.getFats();
         BigDecimal calories = calculateCalories(meal);
         Long id = meal.getId();
-        mealRepository.updateMealById(name, mealDate, proteins, carbs, fats, calories, id);
+        String modifiedBy = userFinder.findLoggedUser().getLogin();
+        mealRepository.updateMealById(name, mealDate, proteins, carbs, fats, calories, modifiedBy, id);
     }
 
     private Meal getMealFromDto(NewMealDto meal) {
@@ -53,6 +54,7 @@ public class MealService {
                 .fats(meal.getFats())
                 .calories(calculateCalories(meal))
                 .user(userFinder.findLoggedUser())
+                .createdBy(userFinder.findLoggedUser().getLogin())
                 .build();
     }
 

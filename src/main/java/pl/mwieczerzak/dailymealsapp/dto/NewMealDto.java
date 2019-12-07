@@ -17,20 +17,20 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class NewMealDto {
 
-        private Long id;
-        @NotEmpty
-        private String name;
-        @PastOrPresent
-        @NotNull
-        @DateTimeFormat(pattern = "dd-MM-yyyy")
-        private LocalDate mealDate;
-        @NotNull
-        private BigDecimal proteins;
-        @NotNull
-        private BigDecimal carbs;
-        @NotNull
-        private BigDecimal fats;
-        private BigDecimal calories;
-        private User user;
+    private Long id;
+    @NotEmpty
+    private String name;
+    @PastOrPresent
+    @NotNull
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate mealDate;
+    @NotNull
+    private BigDecimal proteins;
+    @NotNull
+    private BigDecimal carbs;
+    @NotNull
+    private BigDecimal fats;
+    private BigDecimal calories;
+    private User user;
 
-    }
+}
